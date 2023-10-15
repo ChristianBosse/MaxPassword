@@ -1,10 +1,15 @@
 const crypto = require("crypto");
+const { url } = require("inspector");
 
 const algorithm = "aes-256-cbc"; //algorithm to use
 const key = "12345678901234567890123456789012"; //32 bytes
 
 //encrypt function
 const encrypt = (iv, data) => {
+    //check if iv is a string
+    if (typeof iv === "string") {
+        iv = Buffer.from(iv, "hex");
+    }
     let cipher = crypto.createCipheriv(algorithm, key, iv);
     let encryptedData = cipher.update(data, "utf-8", "hex");
     encryptedData += cipher.final("hex");
@@ -54,4 +59,22 @@ const multipleDecrypt = (data, isPasswordEncrypted) => {
     }
 };
 
-module.exports = { encrypt, decrypt, multipleDecrypt };
+const updateEncrypt = (
+    data,
+    url,
+    username,
+    email,
+    password,
+    category,
+    description
+) => {
+    data.URL = encrypt(data.iv, url);
+    data.username = encrypt(data.iv, username);
+    data.email = encrypt(data.iv, email);
+    data.password = encrypt(data.iv, password);
+    data.category = encrypt(data.iv, category);
+    data.description = encrypt(data.iv, description);
+    return data;
+};
+
+module.exports = { encrypt, decrypt, multipleDecrypt, updateEncrypt };
