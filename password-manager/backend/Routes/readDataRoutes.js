@@ -1,6 +1,6 @@
 const express = require("express");
 const { readFile } = require("fs");
-const { decrypt } = require("../Encryption/encryption");
+const { decrypt, multipleDecrypt } = require("../Encryption/encryption");
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -8,29 +8,13 @@ router.get("/", (req, res) => {
         const jsonData = JSON.parse(data);
 
         //decrypting URL, username, email, password, category, description
-        for (let i = 0; i < jsonData.length; i++) {
-            jsonData[i].URL = decrypt(jsonData[i].URL, jsonData[i].iv);
-            jsonData[i].username = decrypt(
-                jsonData[i].username,
-                jsonData[i].iv
-            );
-            jsonData[i].email = decrypt(jsonData[i].email, jsonData[i].iv);
-
-            jsonData[i].category = decrypt(
-                jsonData[i].category,
-                jsonData[i].iv
-            );
-            jsonData[i].description = decrypt(
-                jsonData[i].description,
-                jsonData[i].iv
-            );
-        }
+        const decryptedData = multipleDecrypt(jsonData, jsonData[0].iv);
 
         if (err) {
             console.log(err);
             res.status(500).send("Error reading file");
         } else {
-            res.send(jsonData);
+            res.send(decryptedData);
         }
     });
 });

@@ -1,11 +1,17 @@
 const express = require("express");
 const { readFile, writeFile } = require("fs");
+const { decrypt, multipleDecrypt } = require("../Encryption/encryption.js");
 const passwordModelEncryption = require("../Models/passwordModel.js");
 const router = express.Router();
 
-router.patch("/:id/:password", (req, res) => {
+router.patch("/:id", (req, res) => {
     const id = req.params.id;
-    const newPassword = req.params.password;
+    const url = req.body.url;
+    const username = req.body.username;
+    const email = req.body.email;
+    const password = req.body.password;
+    const category = req.body.category;
+    const description = req.body.description;
 
     readFile("backend/pm.json", (err, data) => {
         if (err) {
@@ -13,41 +19,14 @@ router.patch("/:id/:password", (req, res) => {
             return;
         }
         try {
-            //find password object with id
-            const jsonData = JSON.parse(data);
-            const passwordObject = jsonData.find((password) => {
-                return password.id === id;
-            });
+            //parse json
+            const parsedData = JSON.parse(data);
 
-            //destructuring the whole object
-            const { URL, username, email, category, description } =
-                passwordObject;
+            //find right id
+            const foundId = parsedData.find((item) => item.id === id);
 
-            //delete password object with id
-            const index = jsonData.indexOf(passwordObject);
-            jsonData.splice(index, 1);
-
-            //send data to passwordModelEncryption
-            const updatedObject = passwordModelEncryption(
-                URL,
-                username,
-                email,
-                newPassword,
-                category,
-                description
-            );
-
-            jsonData.push(updatedObject);
-            const updatedData = JSON.stringify(jsonData);
-            writeFile("backend/pm.json", updatedData, (err) => {
-                if (err) {
-                    console.log(err);
-                    res.status(500).send("Error writing to file");
-                }
-                res.status(200).send(
-                    `Password with id: ${id} has been updated!`
-                );
-            });
+            const decryptedData = multipleDecrypt(foundId, foundId.iv);
+            console.log(decryptedData);
         } catch (error) {
             console.log("Error parsing JSON string:", error);
         }

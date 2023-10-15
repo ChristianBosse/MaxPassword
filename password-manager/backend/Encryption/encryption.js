@@ -20,4 +20,29 @@ const decrypt = (data, iv) => {
     return decrypted;
 };
 
-module.exports = { encrypt, decrypt };
+const multipleDecrypt = (data) => {
+    //check if data is an array
+    if (data.length > 0) {
+        console.log("data is an array");
+        for (let i = 0; i < data.length; i++) {
+            data[i].URL = decrypt(data[i].URL, data[i].iv);
+            data[i].username = decrypt(data[i].username, data[i].iv);
+            data[i].email = decrypt(data[i].email, data[i].iv);
+            data[i].password = decrypt(data[i].password, data[i].iv);
+            data[i].category = decrypt(data[i].category, data[i].iv);
+            data[i].description = decrypt(data[i].description, data[i].iv);
+        }
+        return data;
+    } else {
+        console.log("data is an object");
+        data.URL = decrypt(data.URL, data.iv);
+        data.username = decrypt(data.username, data.iv);
+        data.email = decrypt(data.email, data.iv);
+        data.password = decrypt(data.password, data.iv);
+        data.category = decrypt(data.category, data.iv);
+        data.description = decrypt(data.description, data.iv);
+        return data;
+    }
+};
+
+module.exports = { encrypt, decrypt, multipleDecrypt };
