@@ -1,6 +1,4 @@
 const crypto = require("crypto");
-const { url } = require("inspector");
-
 const algorithm = "aes-256-cbc"; //algorithm to use
 const key = "12345678901234567890123456789012"; //32 bytes
 

@@ -1,6 +1,6 @@
 const express = require("express");
 const { readFile } = require("fs");
-const { decrypt, multipleDecrypt } = require("../Encryption/encryption");
+const { multipleDecrypt } = require("../Encryption/encryption");
 const router = express.Router();
 
 router.get("/", (req, res) => {

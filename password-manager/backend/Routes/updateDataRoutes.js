@@ -1,11 +1,9 @@
 const express = require("express");
 const { readFile, writeFile } = require("fs");
 const {
-    decrypt,
     multipleDecrypt,
     updateEncrypt,
 } = require("../Encryption/encryption.js");
-const passwordModelEncryption = require("../Models/passwordModel.js");
 const router = express.Router();
 
 router.patch("/:id", (req, res) => {
