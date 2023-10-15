@@ -3,14 +3,13 @@ const { readFile, writeFile } = require("fs");
 const passwordModelEncryption = require("../Models/passwordModel.js");
 const router = express.Router();
 
-router.post("/:password", (req, res) => {
-    const password = req.params.password;
-    //random data
-    const URL = "https://www.google.com/";
-    const username = "christian";
-    const email = "chris@email.com";
-    const category = "bank";
-    const description = "bank account";
+router.post("/", (req, res) => {
+    const URL = req.body.url;
+    const username = req.body.username;
+    const email = req.body.email;
+    const password = req.body.password;
+    const category = req.body.category;
+    const description = req.body.description;
 
     const encryptedData = passwordModelEncryption(
         URL,

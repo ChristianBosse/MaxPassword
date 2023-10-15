@@ -25,7 +25,7 @@ router.patch("/:id", (req, res) => {
             //find right id
             const foundId = parsedData.find((item) => item.id === id);
 
-            const decryptedData = multipleDecrypt(foundId, foundId.iv);
+            const decryptedData = multipleDecrypt(foundId, false);
             console.log(decryptedData);
         } catch (error) {
             console.log("Error parsing JSON string:", error);
