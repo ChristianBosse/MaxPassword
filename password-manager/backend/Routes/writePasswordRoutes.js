@@ -22,7 +22,7 @@ router.post("/:password", (req, res) => {
                     console.log(err);
                     res.status(500).send("Error writing to file");
                 } else {
-                    res.status(200).send("Success");
+                    res.status(200).send(`Password has been added!`);
                 }
             });
         } catch (error) {

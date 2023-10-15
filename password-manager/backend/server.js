@@ -3,6 +3,7 @@ const writePasswordRoutes = require("./Routes/writePasswordRoutes.js");
 const readDataRoutes = require("./Routes/readDataRoutes.js");
 const readPasswordRoutes = require("./Routes/readPasswordRoutes.js");
 const updatePasswordRoutes = require("./Routes/updatePasswordRoutes.js");
+const deletePasswordRoutes = require("./Routes/deletePasswordRoutes.js");
 const app = express();
 const port = 3000;
 
@@ -21,6 +22,9 @@ app.use("/decrypt", readPasswordRoutes);
 
 //update password in pm.json
 app.use("/update", updatePasswordRoutes);
+
+//delete password in pm.json
+app.use("/delete", deletePasswordRoutes);
 
 app.listen(port, () =>
     console.log(`Password Manager app listening on port ${port}!`)

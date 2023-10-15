@@ -44,7 +44,9 @@ router.patch("/:id/:password", (req, res) => {
                     console.log(err);
                     res.status(500).send("Error writing to file");
                 }
-                res.status(200).send("Success");
+                res.status(200).send(
+                    `Password with id: ${id} has been updated!`
+                );
             });
         } catch (error) {
             console.log("Error parsing JSON string:", error);
