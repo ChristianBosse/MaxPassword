@@ -3,7 +3,7 @@ const { mkdir, writeFile, existsSync } = require("fs");
 
 //get the path to appdata
 const defaultPath = os.homedir() + "/AppData/Roaming";
-const defaultFolder = "/Password Manager";
+const defaultFolder = "/MaxPassword";
 const filename = "/pm.json";
 
 const createFile = () => {
