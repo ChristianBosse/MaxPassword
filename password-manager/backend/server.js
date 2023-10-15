@@ -9,8 +9,6 @@ const { createFile } = require("./setup/filepath.js");
 const app = express();
 const port = 3000;
 
-//**** MAKE A PASSWORD GENERATOR ****//
-
 //body parser
 app.use(bodyParser.json());
 app.use(
@@ -19,6 +17,7 @@ app.use(
     })
 );
 
+//create pm.json file
 createFile();
 
 app.get("/", (req, res) => res.send("Hello World!"));
