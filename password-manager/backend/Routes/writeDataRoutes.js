@@ -1,9 +1,11 @@
 const express = require("express");
 const { readFile, writeFile } = require("fs");
 const passwordModelEncryption = require("../Models/passwordModel.js");
+const { filePath } = require("../setup/filepath.js");
 const router = express.Router();
 
 router.post("/", (req, res) => {
+    const path = filePath();
     const URL = req.body.url;
     const username = req.body.username;
     const email = req.body.email;
@@ -20,7 +22,7 @@ router.post("/", (req, res) => {
         description
     );
 
-    readFile("backend/pm.json", (err, data) => {
+    readFile(path, (err, data) => {
         if (err) {
             console.log("Error reading file", err);
             return;
@@ -30,7 +32,7 @@ router.post("/", (req, res) => {
             jsonData.push(encryptedData);
             const jsonEncryptedData = JSON.stringify(jsonData);
 
-            writeFile("backend/pm.json", jsonEncryptedData, (err) => {
+            writeFile(path, jsonEncryptedData, (err) => {
                 if (err) {
                     console.log(err);
                     res.status(500).send("Error writing to file");

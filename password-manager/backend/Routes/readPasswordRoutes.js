@@ -1,12 +1,14 @@
 const express = require("express");
 const { readFile } = require("fs");
 const { decrypt } = require("../Encryption/encryption.js");
+const { filePath } = require("../setup/filepath.js");
 const router = express.Router();
 
 router.get("/:id", (req, res) => {
+    const path = filePath();
     const id = req.params.id;
 
-    readFile("backend/pm.json", (err, data) => {
+    readFile(path, (err, data) => {
         if (err) {
             console.log("Error reading file", err);
             return;

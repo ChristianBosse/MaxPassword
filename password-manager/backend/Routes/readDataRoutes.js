@@ -1,10 +1,12 @@
 const express = require("express");
 const { readFile } = require("fs");
 const { multipleDecrypt } = require("../Encryption/encryption");
+const { filePath } = require("../setup/filepath.js");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-    readFile("backend/pm.json", "utf8", (err, data) => {
+    const path = filePath();
+    readFile(path, "utf8", (err, data) => {
         if (err) {
             console.log(err);
             res.status(500).send("Error reading file");

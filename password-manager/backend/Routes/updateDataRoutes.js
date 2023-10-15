@@ -1,5 +1,6 @@
 const express = require("express");
 const { readFile, writeFile } = require("fs");
+const { filePath } = require("../setup/filepath.js");
 const {
     multipleDecrypt,
     updateEncrypt,
@@ -7,6 +8,7 @@ const {
 const router = express.Router();
 
 router.patch("/:id", (req, res) => {
+    const path = filePath();
     const id = req.params.id;
     const url = req.body.url;
     const username = req.body.username;
@@ -15,7 +17,7 @@ router.patch("/:id", (req, res) => {
     const category = req.body.category;
     const description = req.body.description;
 
-    readFile("backend/pm.json", (err, data) => {
+    readFile(path, (err, data) => {
         if (err) {
             console.log("Error reading file", err);
             return;
@@ -48,18 +50,14 @@ router.patch("/:id", (req, res) => {
             filteredData.push(updatedEncryptedData);
 
             //write the file
-            writeFile(
-                "backend/pm.json",
-                JSON.stringify(filteredData),
-                (err) => {
-                    if (err) {
-                        console.log(err);
-                        res.status(500).send("Error writing to file");
-                    } else {
-                        res.status(200).send(`Your data has been updated!`);
-                    }
+            writeFile(path, JSON.stringify(filteredData), (err) => {
+                if (err) {
+                    console.log(err);
+                    res.status(500).send("Error writing to file");
+                } else {
+                    res.status(200).send(`Your data has been updated!`);
                 }
-            );
+            });
         } catch (error) {
             console.log("Error parsing JSON string:", error);
         }

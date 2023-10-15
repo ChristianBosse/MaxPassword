@@ -1,11 +1,13 @@
 const express = require("express");
 const { readFile, writeFile } = require("fs");
+const { filePath } = require("../setup/filepath.js");
 const router = express.Router();
 
 router.delete("/:id", (req, res) => {
+    const path = filePath();
     const id = req.params.id;
 
-    readFile("backend/pm.json", (err, data) => {
+    readFile(path, (err, data) => {
         if (err) {
             console.log("Error reading file", err);
             return;
@@ -23,7 +25,7 @@ router.delete("/:id", (req, res) => {
 
             const updatedData = JSON.stringify(jsonData);
 
-            writeFile("backend/pm.json", updatedData, (err) => {
+            writeFile(path, updatedData, (err) => {
                 if (err) {
                     console.log(err);
                     res.status(500).send("Error writing to file");
