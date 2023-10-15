@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from "electron";
 import path from "node:path";
+import childProcess from "child_process";
 
 // The built directory structure
 //
@@ -16,6 +17,7 @@ process.env.VITE_PUBLIC = app.isPackaged
     : path.join(process.env.DIST, "../public");
 
 let win: BrowserWindow | null;
+let serverProcess;
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
 const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
 
@@ -42,6 +44,10 @@ function createWindow() {
         win.loadFile(path.join(process.env.DIST, "index.html"));
     }
 }
+
+serverProcess = childProcess.fork(
+    path.resolve(__dirname, "..", "backend/server.js")
+);
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
