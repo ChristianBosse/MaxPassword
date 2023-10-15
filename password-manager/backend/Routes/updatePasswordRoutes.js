@@ -29,10 +29,10 @@ router.patch("/:id/:password", (req, res) => {
 
             //send data to passwordModelEncryption
             const updatedObject = passwordModelEncryption(
-                newPassword,
                 URL,
                 username,
                 email,
+                newPassword,
                 category,
                 description
             );

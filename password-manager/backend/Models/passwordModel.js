@@ -3,33 +3,35 @@ const crypto = require("crypto");
 
 //JSON model for password encryption
 const passwordModelEncryption = (
+    URL,
+    username,
+    email,
     password,
-    URL = null,
-    username = null,
-    email = null,
-    category = null,
-    description = null
+    category,
+    description
 ) => {
-    //encrypt password
-    const encryptedPassword = encrypt(password);
-    //split password and iv on :
-    const splitPassword = encryptedPassword.split(":");
-    const iv = splitPassword[0];
-    const encrypted = splitPassword[1];
+    //random data
+    URL = "https://www.google.com/";
+    username = "username";
+    email = "chris@email.com";
+    password = "password";
+    category = "bank";
+    description = "bank account";
 
     //generate random id with crypto
     const id = crypto.randomUUID();
+    const iv = crypto.randomBytes(16); //16 bytes
 
     //create the encryption schema
     const encryptionSchema = {
         id: id,
-        URL: URL || "localhost:3000",
-        username: username || "admin",
-        email: email || "admin@email.com",
-        password: encrypted,
-        iv: iv,
-        category: category || "none",
-        description: description || "",
+        URL: encrypt(iv, URL),
+        username: encrypt(iv, username),
+        email: encrypt(iv, email),
+        password: encrypt(iv, password),
+        iv: iv.toString("hex"),
+        category: encrypt(iv, category),
+        description: encrypt(iv, description),
     };
 
     //return the encryption schema
