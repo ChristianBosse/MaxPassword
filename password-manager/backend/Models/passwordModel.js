@@ -1,8 +1,15 @@
-const { encrypt, decrypt } = require("../Encryption/encryption");
+const { encrypt } = require("../Encryption/encryption");
 const crypto = require("crypto");
 
 //JSON model for password encryption
-const passwordModelEncryption = (password) => {
+const passwordModelEncryption = (
+    password,
+    URL = null,
+    username = null,
+    email = null,
+    category = null,
+    description = null
+) => {
     //encrypt password
     const encryptedPassword = encrypt(password);
     //split password and iv on :
@@ -16,19 +23,17 @@ const passwordModelEncryption = (password) => {
     //create the encryption schema
     const encryptionSchema = {
         id: id,
-        URL: "localhost:3000",
-        username: "admin",
+        URL: URL || "localhost:3000",
+        username: username || "admin",
+        email: email || "admin@email.com",
         password: encrypted,
         iv: iv,
-        category: "none",
-        description: "",
+        category: category || "none",
+        description: description || "",
     };
 
     //return the encryption schema
     return encryptionSchema;
 };
 
-//JSON model for password decryption
-const passwordModelDecryption = (password) => {};
-
-module.exports = { passwordModelEncryption, passwordModelDecryption };
+module.exports = passwordModelEncryption;

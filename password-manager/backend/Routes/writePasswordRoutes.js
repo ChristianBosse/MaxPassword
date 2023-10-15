@@ -1,6 +1,6 @@
 const express = require("express");
 const { readFile, writeFile } = require("fs");
-const { passwordModelEncryption } = require("../Models/passwordModel.js");
+const passwordModelEncryption = require("../Models/passwordModel.js");
 const router = express.Router();
 
 router.post("/:password", (req, res) => {
