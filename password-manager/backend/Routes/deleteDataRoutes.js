@@ -2,7 +2,7 @@ const express = require("express");
 const { readFile, writeFile } = require("fs");
 const router = express.Router();
 
-router.delete("/:id/", (req, res) => {
+router.delete("/:id", (req, res) => {
     const id = req.params.id;
 
     readFile("backend/pm.json", (err, data) => {
