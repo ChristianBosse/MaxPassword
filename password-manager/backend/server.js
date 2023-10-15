@@ -5,6 +5,7 @@ const readDataRoutes = require("./Routes/readDataRoutes.js");
 const readPasswordRoutes = require("./Routes/readPasswordRoutes.js");
 const updatePasswordRoutes = require("./Routes/updateDataRoutes.js");
 const deleteDataRoutes = require("./Routes/deleteDataRoutes.js");
+const { createFile } = require("./setup/filepath.js");
 const app = express();
 const port = 3000;
 
@@ -17,6 +18,8 @@ app.use(
         extended: true,
     })
 );
+
+createFile();
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
