@@ -5,7 +5,21 @@ const router = express.Router();
 
 router.post("/:password", (req, res) => {
     const password = req.params.password;
-    const encryptedData = passwordModelEncryption(password);
+    //random data
+    const URL = "https://www.google.com/";
+    const username = "christian";
+    const email = "chris@email.com";
+    const category = "bank";
+    const description = "bank account";
+
+    const encryptedData = passwordModelEncryption(
+        URL,
+        username,
+        email,
+        password,
+        category,
+        description
+    );
 
     readFile("backend/pm.json", (err, data) => {
         if (err) {

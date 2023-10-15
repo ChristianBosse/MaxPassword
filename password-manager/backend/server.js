@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const writePasswordRoutes = require("./Routes/writeDataRoutes.js");
 const readDataRoutes = require("./Routes/readDataRoutes.js");
 const readPasswordRoutes = require("./Routes/readPasswordRoutes.js");
@@ -8,6 +9,14 @@ const app = express();
 const port = 3000;
 
 //**** MAKE A PASSWORD GENERATOR ****//
+
+//body parser
+app.use(bodyParser.json());
+app.use(
+    bodyParser.urlencoded({
+        extended: true,
+    })
+);
 
 app.get("/", (req, res) => res.send("Hello World!"));
 

@@ -10,14 +10,6 @@ const passwordModelEncryption = (
     category,
     description
 ) => {
-    //random data
-    URL = "https://www.google.com/";
-    username = "username";
-    email = "chris@email.com";
-    password = "password";
-    category = "bank";
-    description = "bank account";
-
     //generate random id with crypto
     const id = crypto.randomUUID();
     const iv = crypto.randomBytes(16); //16 bytes
